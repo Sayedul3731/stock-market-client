@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { getStocksData } from "../../api";
-
+import { deleteStockData, getStocksData } from "../../api";
+import { CiEdit } from "react-icons/ci";
+import { MdDelete } from "react-icons/md";
+import Swal from "sweetalert2";
 
 const Table = () => {
     const [stockData, setStockData] = useState([]);
@@ -13,7 +15,21 @@ const Table = () => {
         }
         fetchStockData();
     }, [])
-    console.log(stockData);
+    const handleUpdate = (id) => {
+        console.log(id);
+    }
+    const handleDelete = async (id) => {
+        const result = await deleteStockData(id);
+        if (result?.id) {
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Your stock data deleted successfully!",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+    }
     return (
 
         <div className="overflow-x-auto ">
@@ -27,6 +43,8 @@ const Table = () => {
                         <th className="py-3 px-6  border-b text-end">open</th>
                         <th className="py-3 px-6  border-b text-end">close</th>
                         <th className="py-3 px-6  border-b text-end">volume</th>
+                        <th className="py-3 px-6  border-b text-end">Edit</th>
+                        <th className="py-3 px-6  border-b text-end">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,6 +57,8 @@ const Table = () => {
                             <td className="py-4 px-6 border-b text-end">{data?.open}</td>
                             <td className="py-4 px-6 border-b text-end">{data?.close}</td>
                             <td className="py-4 px-6 border-b text-end">{data?.volume}</td>
+                            <td className="py-4 px-6 border-b pl-8"><span onClick={() => handleUpdate(data?.id)} className="text-2xl text-green-600 cursor-pointer"><CiEdit /></span></td>
+                            <td className="py-4 px-6 border-b pl-14"><span onClick={() => handleDelete(data?.id)} className="text-2xl text-red-600 cursor-pointer"><MdDelete /></span></td>
                         </tr>)
                     }
                 </tbody>
