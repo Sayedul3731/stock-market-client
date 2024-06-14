@@ -12,10 +12,8 @@ const AddNewStock = () => {
         close: "",
         volume: ""
     });
-    console.log(formData);
     const handleChange = (e) => {
         const { id, value } = e.target;
-        console.log(id, value);
         setFormData(prevState => ({
             ...prevState,
             [id]: id === 'low' || id === 'high' || id === 'open' || id === 'close' || id === 'volume' ? parseFloat(value) : value
@@ -24,7 +22,6 @@ const AddNewStock = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Form Data Submitted:", formData);
         const stockData = await createStockData(formData);
         if (stockData?.trade_code) {
             Swal.fire({

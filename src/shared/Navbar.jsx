@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
     return (
-        <div className='py-5 shadow-md'>
+        <div className='py-5 shadow-md bg-blue-600 text-white'>
             <ul className='flex justify-center items-center gap-5 font-semibold'>
                 <NavLink to="/">Home</NavLink>
                 <NavLink to="/add-new-stock">Add Stock</NavLink>

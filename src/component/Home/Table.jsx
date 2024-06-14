@@ -4,7 +4,21 @@ import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 import UpdateStockData from "../UpdateStockData";
+import { Line } from "react-chartjs-2";
+import {
+    Chart as ChartJS,
+    LineElement,
+    PointElement,
+    CategoryScale,
+    LinearScale
 
+} from "chart.js";
+ChartJS.register(
+    LineElement,
+    PointElement,
+    CategoryScale,
+    LinearScale
+)
 const Table = () => {
     const [stockData, setStockData] = useState([]);
     const [openModal, setOpenModal] = useState(false);
@@ -13,7 +27,6 @@ const Table = () => {
     useEffect(() => {
         const fetchStockData = async () => {
             const stocksData = await getStocksData();
-            console.log(stocksData);
             setStockData(stocksData)
         }
         fetchStockData();
@@ -34,10 +47,24 @@ const Table = () => {
         setData(data)
         setOpenModal(true)
     }
-
+    const labels = ["may 15", "may 16"]
+    const datas = {
+        labels: labels,
+        datasets: [{
+            label: 'My First Dataset',
+            data: [65, 59, 80, 81, 56, 55, 40],
+            fill: false,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1
+        }]
+    };
+    const options = {}
     return (
 
         <div className="overflow-x-auto ">
+            <div>
+                <Line data={datas} options={options}></Line>
+            </div>
             <table className="min-w-[90%] shadow-md  border mx-auto border-gray-100  my-6">
                 <thead>
                     <tr className="bg-[#333333] text-white">
@@ -55,7 +82,7 @@ const Table = () => {
                 <tbody>
                     {
                         stockData?.map((data, i) => <tr key={i} className="hover:bg-gray-50 transition duration-300">
-                            <td className="py-4 px-6 border-b">{data?.date} </td>
+                            <td className="py-4 px-6 border-b">{new Date(data?.date).toLocaleDateString()} </td>
                             <td className="py-4 px-6 border-b">{data?.trade_code}</td>
                             <td className="py-4 px-6 border-b">{data?.high}</td>
                             <td className="py-4 px-6 border-b text-end">{data?.low}</td>

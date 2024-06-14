@@ -12,10 +12,8 @@ const UpdateStockData = ({ openModal, setOpenModal, data }) => {
         close: data?.close,
         volume: data?.volume
     });
-    console.log(formData);
     const handleChange = (e) => {
         const { id, value } = e.target;
-        console.log(id, value);
         setFormData(prevState => ({
             ...prevState,
             [id]: id === 'low' || id === 'high' || id === 'open' || id === 'close' || id === 'volume' ? parseFloat(value) : value
@@ -23,7 +21,6 @@ const UpdateStockData = ({ openModal, setOpenModal, data }) => {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Form Data Submitted:", formData);
         const result = await updateStockData(data?.id, formData);
         if (result?.id) {
             Swal.fire({
