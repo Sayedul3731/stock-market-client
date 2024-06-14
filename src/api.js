@@ -10,3 +10,9 @@ export const createUser = async (user) => {
   const res = await axios.post(`${API_URL}/users`, user);
   return res.data;
 };
+
+export const getStocksData = async () => {
+  const res = await axios.get(`${API_URL}/stocks`);
+  console.log(res.data);
+  return res.data;
+};

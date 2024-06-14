@@ -1,7 +1,11 @@
+import Home from "./component/Home/Home";
+import Navbar from "./shared/Navbar";
+
 function App() {
   return (
     <div className="App">
-      <h1 className="text-2xl text-center">Stock Market</h1>
+      <Navbar></Navbar>
+      <Home></Home>
     </div>
   );
 }
