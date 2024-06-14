@@ -3,9 +3,12 @@ import { deleteStockData, getStocksData } from "../../api";
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
+import UpdateStockData from "../UpdateStockData";
 
 const Table = () => {
     const [stockData, setStockData] = useState([]);
+    const [openModal, setOpenModal] = useState(false);
+    const [data, setData] = useState({})
 
     useEffect(() => {
         const fetchStockData = async () => {
@@ -15,9 +18,6 @@ const Table = () => {
         }
         fetchStockData();
     }, [])
-    const handleUpdate = (id) => {
-        console.log(id);
-    }
     const handleDelete = async (id) => {
         const result = await deleteStockData(id);
         if (result?.id) {
@@ -30,6 +30,11 @@ const Table = () => {
             });
         }
     }
+    const handleUpdate = (data) => {
+        setData(data)
+        setOpenModal(true)
+    }
+
     return (
 
         <div className="overflow-x-auto ">
@@ -57,12 +62,13 @@ const Table = () => {
                             <td className="py-4 px-6 border-b text-end">{data?.open}</td>
                             <td className="py-4 px-6 border-b text-end">{data?.close}</td>
                             <td className="py-4 px-6 border-b text-end">{data?.volume}</td>
-                            <td className="py-4 px-6 border-b pl-8"><span onClick={() => handleUpdate(data?.id)} className="text-2xl text-green-600 cursor-pointer"><CiEdit /></span></td>
+                            <td className="py-4 px-6 border-b pl-8"><span onClick={() => handleUpdate(data)} className="text-2xl text-green-600 cursor-pointer"><CiEdit /></span></td>
                             <td className="py-4 px-6 border-b pl-14"><span onClick={() => handleDelete(data?.id)} className="text-2xl text-red-600 cursor-pointer"><MdDelete /></span></td>
                         </tr>)
                     }
                 </tbody>
             </table>
+            <UpdateStockData openModal={openModal} setOpenModal={setOpenModal} data={data}></UpdateStockData>
         </div>
 
     );

@@ -23,3 +23,7 @@ export const deleteStockData = async (id) => {
   const res = await axios.delete(`${API_URL}/stocks/${id}`);
   return res.data;
 };
+export const updateStockData = async (id, data) => {
+  const res = await axios.put(`${API_URL}/stocks/${id}`, data);
+  return res.data;
+};
